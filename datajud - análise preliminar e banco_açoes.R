@@ -5,7 +5,7 @@ library(listviewer)
 library(stringr)
 library(ggplot2)
 
-setwd("C:/Users/gabri/OneDrive/Documents/[CNJ - Insper]/Núcleo Quantitativo/Dados Datajud/20 mil 11.04")
+setwd("C:/Users/gabri/OneDrive/Documents/[CNJ - Insper]/NÃºcleo Quantitativo/Dados Datajud/20 mil 11.04")
 
 
 # Primeiro vamos verificar se todos os processos possuem a mesma estrutura
@@ -27,7 +27,7 @@ table(nomes)
 xtabs(~autor_tipo + df$resultado_favoravel_autor, data = df)
 tribunal <- table(db$sigla_tribunal)
 
-#Gráfico de frequência das variáveis:
+#GrÃ¡fico de frequÃªncia das variÃ¡veis:
 
 #GRAU
 
@@ -36,17 +36,17 @@ grau <- df$grau %>% sort (decreasing=T)
 grau <- as_tibble(grau)
 
 grau %>% ggplot() +
-  geom_bar(aes(y=value)) + labs(x="Número de processos", y = "Grau") + theme_minimal()
+  geom_bar(aes(y=value)) + labs(x="NÃºmero de processos", y = "Grau") + theme_minimal()
 
 
 #INSTANCIA
 db %>% ggplot() +
-  geom_bar(aes(y=instancia)) + labs(x="Número de processos", y = "Instância") + theme_minimal()
+  geom_bar(aes(y=instancia)) + labs(x="NÃºmero de processos", y = "InstÃ¢ncia") + theme_minimal()
 
 
 #TRIBUNAL
 db %>% ggplot() +
-  geom_bar(aes(y=sigla_tribunal)) + labs(x="Número de processos", y = "Tribunal") + theme_minimal()
+  geom_bar(aes(y=sigla_tribunal)) + labs(x="NÃºmero de processos", y = "Tribunal") + theme_minimal()
 
 
 #data_ajuizamento
@@ -60,13 +60,13 @@ orgao <- df$dpj_codigo_orgao_nacional
 orgao <- as_tibble(orgao)
 
 orgao %>% ggplot() +
-  geom_bar(aes(y=value)) + labs(x="Número de processos", y = "Órgão") + theme_minimal()
+  geom_bar(aes(y=value)) + labs(x="NÃºmero de processos", y = "Ã“rgÃ£o") + theme_minimal()
 print(orgao)
 
 
 
 tab_movimento %>% ggplot() +
-  geom_col(aes(x=n, y=movimento)) + labs(x="Número de observações", y = "Variáveis relacionadas a movimentos") + theme_minimal()
+  geom_col(aes(x=n, y=movimento)) + labs(x="NÃºmero de observaÃ§Ãµes", y = "VariÃ¡veis relacionadas a movimentos") + theme_minimal()
 
 
 df <- as_tibble(db)
@@ -74,7 +74,7 @@ df <- as_tibble(db)
 
 
 # Aqui vemos que todos os processos possuem o campo dadosBasicos, mas os outros
-# campos não estão presentes em todos os processos
+# campos nÃ£o estÃ£o presentes em todos os processos
 
 ################################################################################
 
@@ -98,12 +98,12 @@ tab_basicos <- table(dados_basicos)
 tab_basicos <- as_tibble(tab_basicos)
 
 
-#Gráfico de frequência das variáveis:
+#GrÃ¡fico de frequÃªncia das variÃ¡veis:
 tab_basicos %>% ggplot() +
-  geom_col(aes(x=dados_basicos, y=n)) + labs(x="Variáveis", y = "Número de observações") + theme_minimal()
+  geom_col(aes(x=dados_basicos, y=n)) + labs(x="VariÃ¡veis", y = "NÃºmero de observaÃ§Ãµes") + theme_minimal()
 
 # Todos tem assunto, classeProcessual, codigoLocalidade, dataAjuizamento,
-# numero, orgaoJulgador, mas os outros campos estão incompletos
+# numero, orgaoJulgador, mas os outros campos estÃ£o incompletos
 
 
 ################################################################################
@@ -127,9 +127,9 @@ tab_assunto <- table(campo_assunto)
 tab_assunto <- as_tibble(tab_assunto)
 
 
-#Gráfico de frequência das variáveis:
+#GrÃ¡fico de frequÃªncia das variÃ¡veis:
 tab_assunto %>% ggplot() +
-  geom_col(aes(x=n, y=campo_assunto)) + labs(x="Número de observações", y = "Assunto") + theme_minimal()
+  geom_col(aes(x=n, y=campo_assunto)) + labs(x="NÃºmero de observaÃ§Ãµes", y = "Assunto") + theme_minimal()
 
 
 ################################################################################
@@ -153,13 +153,13 @@ tab_movimento <- table(movimento)%>% sort(decreasing = T) %>% head(20)
 tab_movimento <- as_tibble(tab_movimento) %>% sort (decreasing = T)
 
 
-#Gráfico de frequência das variáveis:
+#GrÃ¡fico de frequÃªncia das variÃ¡veis:
 tab_movimento %>% ggplot() +
-  geom_col(aes(x=n, y=movimento)) + labs(x="Número de observações", y = "Variáveis relacionadas a movimentos") + theme_minimal()
+  geom_col(aes(x=n, y=movimento)) + labs(x="NÃºmero de observaÃ§Ãµes", y = "VariÃ¡veis relacionadas a movimentos") + theme_minimal()
 
 ############################################################################
 
-# Verificar quais são os assuntos possíveis no banco de dados
+# Verificar quais sÃ£o os assuntos possÃ­veis no banco de dados
 assunto <- vector()
 
 for(i in 1:1000){
@@ -186,21 +186,21 @@ for(i in 1:1000){
 
 table(assunto) %>% sort(decreasing = T) %>% head(10)
 
-#Ressalva que não são todos os casos que o assunto está no campo
-# dpj_nomeAssuntoNacional, então os numeros não estao corretos
+#Ressalva que nÃ£o sÃ£o todos os casos que o assunto estÃ¡ no campo
+# dpj_nomeAssuntoNacional, entÃ£o os numeros nÃ£o estao corretos
 
 
 tab_assuntos_freq <- table(assunto)%>% sort(decreasing = T) %>% head(10)
 tab_assuntos_freq <- as_tibble(tab_assuntos_freq)
 
 
-#Gráfico de frequência dos assuntos:
+#GrÃ¡fico de frequÃªncia dos assuntos:
 tab_assuntos_freq %>% ggplot() +
-  geom_col(aes(x=n, y=assunto)) + labs(x="Número de observações", y = "Assuntos mais frequentes") + theme_minimal()
+  geom_col(aes(x=n, y=assunto)) + labs(x="NÃºmero de observaÃ§Ãµes", y = "Assuntos mais frequentes") + theme_minimal()
 
 ################################################################################
 
-# criar um banco de dados com as informações das açoes e incluir alguns assuntos de especial interesse para exploraçao preliminar
+# criar um banco de dados com as informaÃ§Ãµes das aÃ§oes e incluir alguns assuntos de especial interesse para exploraÃ§ao preliminar
 
 banco_dados_basicos <- data.frame(id = rep(NA, 1000),
                                   dataProtocolo = rep(NA, 1000),
@@ -332,12 +332,12 @@ for(i in 1:1000){
   
   
   if(TRUE %in%
-     str_detect(processo[["dadosBasicos"]][["assunto"]],"Corrupção ativa")){
+     str_detect(processo[["dadosBasicos"]][["assunto"]],"CorrupÃ§Ã£o ativa")){
     banco_dados_basicos$CorrupAtiva[i] <- 1 
   } 
   
   if(TRUE %in%
-     str_detect(processo[["dadosBasicos"]][["assunto"]],"Corrupção passiva")){
+     str_detect(processo[["dadosBasicos"]][["assunto"]],"CorrupÃ§Ã£o passiva")){
     banco_dados_basicos$CorrupPassiva[i] <- 1 
   } 
   
@@ -347,12 +347,12 @@ for(i in 1:1000){
   } 
   
   if(TRUE %in%
-     str_detect(processo[["dadosBasicos"]][["assunto"]],"Crimes da Lei de licitações")){
+     str_detect(processo[["dadosBasicos"]][["assunto"]],"Crimes da Lei de licitaÃ§Ãµes")){
     banco_dados_basicos$LeiLicitacoes[i] <- 1 
   } 
   
   if(TRUE %in%
-     str_detect(processo[["dadosBasicos"]][["assunto"]],"Prevaricação")){
+     str_detect(processo[["dadosBasicos"]][["assunto"]],"PrevaricaÃ§Ã£o")){
     banco_dados_basicos$Prevaricacao[i] <- 1 
   } 
   
@@ -362,12 +362,12 @@ for(i in 1:1000){
   } 
   
   if(TRUE %in%
-     str_detect(processo[["dadosBasicos"]][["assunto"]],"Crimes de &quot;Lavagem&quot; ou Ocultação de Bens, Direitos ou Valores")){
+     str_detect(processo[["dadosBasicos"]][["assunto"]],"Crimes de &quot;Lavagem&quot; ou OcultaÃ§Ã£o de Bens, Direitos ou Valores")){
     banco_dados_basicos$CrimesLavagem[i] <- 1 
   } 
   
   if(TRUE %in%
-     str_detect(processo[["dadosBasicos"]][["assunto"]],"Concussão")){
+     str_detect(processo[["dadosBasicos"]][["assunto"]],"ConcussÃ£o")){
     banco_dados_basicos$Concussao[i] <- 1 
   } 
   
@@ -377,7 +377,7 @@ for(i in 1:1000){
   } 
   
   if(TRUE %in%
-     str_detect(processo[["dadosBasicos"]][["assunto"]],'ou Ocultação de Bens, Direitos ou Valores Oriundos de Corrupção')){
+     str_detect(processo[["dadosBasicos"]][["assunto"]],'ou OcultaÃ§Ã£o de Bens, Direitos ou Valores Oriundos de CorrupÃ§Ã£o')){
     banco_dados_basicos$Lavagem[i] <- 1 
   } 
   
@@ -406,29 +406,29 @@ table(banco_dados_basicos$AdvoAdministrativa)
 table(banco_dados_basicos$Lavagem)
 
 
-#Gráfico que cruza tribunais e grau decisório:
+#GrÃ¡fico que cruza tribunais e grau decisÃ³rio:
 
 siglas_sem_NA <- banco_dados_basicos %>% filter(banco_dados_basicos$siglaTribunal != "NA")
 ggplot(siglas_sem_NA, aes(y = as.factor(siglaTribunal), fill = grau)) + geom_bar() + theme_light() + 
-  labs(x = "Nº ações", y = "Tribunal")
+  labs(x = "NÂº aÃ§Ãµes", y = "Tribunal")
 
 df %>% filter(sigla_tribunal != "NA") %>%
   ggplot(df, aes (y=as.factor(sigla_tribunal), fill=instancia)) + geom_bar() + theme_light() + 
-  labs(x = "Nº ações", y = "Tribunal")
+  labs(x = "NÂº aÃ§Ãµes", y = "Tribunal")
 
 
   ggplot(df, aes (y=as.factor(instancia), fill=esfera)) + geom_bar() + theme_light() + 
-  labs(x = "Nº ações", y = "Instância")
+  labs(x = "NÂº aÃ§Ãµes", y = "InstÃ¢ncia")
 
-#Gráfico que cruza tribunais e corrupçao:
+#GrÃ¡fico que cruza tribunais e corrupÃ§ao:
 
 siglas_sem_NA <- banco_dados_basicos %>% filter(banco_dados_basicos$siglaTribunal != "NA")
 ggplot(siglas_sem_NA, aes(y = as.factor(siglaTribunal), fill = CrimesLavagem)) + geom_bar() + theme_light() + 
-  labs(x = "Nº ações", y = "Tribunal")
+  labs(x = "NÂº aÃ§Ãµes", y = "Tribunal")
 
 
 ###################################################################################################################3
-#Agora vamos olhar a frequência de preenchimento abrindo o campo orgaoJulgador
+#Agora vamos olhar a frequÃªncia de preenchimento abrindo o campo orgaoJulgador
 
 orgao_julgador <- vector()
 
@@ -448,14 +448,14 @@ tab_orgao <- table(orgao_julgador)
 tab_orgao <- as_tibble(tab_orgao)
 
 
-#Gráfico de frequência das variáveis:
+#GrÃ¡fico de frequÃªncia das variÃ¡veis:
 tab_orgao %>% ggplot() +
-  geom_col(aes(x=orgao_julgador, y=n)) + labs(x="Variáveis", y = "Número de observações") + theme_minimal()
+  geom_col(aes(x=orgao_julgador, y=n)) + labs(x="VariÃ¡veis", y = "NÃºmero de observaÃ§Ãµes") + theme_minimal()
 
-#Gráfico de frequência das instâncias:
+#GrÃ¡fico de frequÃªncia das instÃ¢ncias:
 
 table(banco_dados_basicos$instancia)
 tab_instancia <- table(instancia)
 tab_instancia <- as_tibble(tab_instancia)
 tab_orgao %>% ggplot() +
-  geom_col(aes(x=instancia, y=n)) + labs(x="Variáveis", y = "Número de observações") + theme_minimal()
+  geom_col(aes(x=instancia, y=n)) + labs(x="VariÃ¡veis", y = "NÃºmero de observaÃ§Ãµes") + theme_minimal()
