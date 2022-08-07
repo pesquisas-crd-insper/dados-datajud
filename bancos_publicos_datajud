@@ -1,0 +1,9 @@
+#Os bancos de dados originados dos arquivos JSON disponibilizados pelo CNJ estão disponíveis para acesso público nos seguintes links:
+
+#Banco de ações: https://drive.google.com/file/d/1vswC7gL6lioMmk7GH-t9q05oI96KnIaB/view?usp=sharing
+#Banco de assuntos: https://drive.google.com/file/d/1v22a_DEtMwo5QyMB7DhAY2pkeUGWUIFh/view?usp=sharing
+#Banco de movimentos: https://drive.google.com/file/d/1teHlbR6Kdg6mllG59qM1O6uX3z7_R_CT/view?usp=sharing
+
+#A id constante nos três bancos é a variável capaz de relacionar as informações contidas em cada arquivo .csv.
+#Cada banco contempla todos os processos incluídos na amostra da pesquisa cujo início data de 2010 em diante.
+#Serão disponibilizados codebooks e arquivos .rmd com a descrição das variáveis até a elaboração do relatório final.
