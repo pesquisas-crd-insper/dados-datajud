@@ -9,13 +9,14 @@ options(scipen = 999)
 #setwd("C:/Users/gabri/OneDrive/Documents/[CNJ - Insper]/N?cleo Quantitativo/Dados Datajud")
 #setwd("C:\\Google Drive\\cnj")
 
-banco_acoes <- read_csv("acoes_consolidado (1).csv")
+banco_acoes <- read_csv("acoes_consolidado.csv")
 
 banco_acoes <- banco_acoes %>%
   mutate(periodo = case_when(ano_cnj > 2019 & ano_cnj < 2023 ~ "2020-2022",
                              ano_cnj > 2009 & ano_cnj < 2020 ~ "2010-2019"))
 
 banco_acoes %>%
+  filter(periodo == "2020-2022") %>%
   count(instancia, periodo) %>%
   mutate(instancia = fct_reorder(instancia, n)) %>%
   ggplot(aes(n, instancia)) +
@@ -23,7 +24,19 @@ banco_acoes %>%
   theme_minimal() +
   facet_wrap(vars(periodo), scale = "free_x")
 
-ggsave("Graficos\\grafico_instancia.png", device = "png", bg = "white",
+ggsave("Graficos\\grafico_instancia_2010.png", device = "png", bg = "white",
+       dpi = 300, width = 14, height = 7, units = "cm")
+
+banco_acoes %>%
+  filter(periodo == "2010-2019") %>%
+  count(instancia, periodo) %>%
+  mutate(instancia = fct_reorder(instancia, n)) %>%
+  ggplot(aes(n, instancia)) +
+  geom_col(position = "dodge") +
+  theme_minimal() +
+  facet_wrap(vars(periodo), scale = "free_x")
+
+ggsave("Graficos\\grafico_instancia_2020.png", device = "png", bg = "white",
        dpi = 300, width = 14, height = 7, units = "cm")
 
 ###############################################################################
@@ -44,15 +57,29 @@ banco_assuntos <- read_csv("assuntos.csv") %>%
                              id %in% id_2010 ~ "2010-2019"))
 
 banco_assuntos %>%
-  count(id, periodo) %>%
+  filter(id %in% id_2020) %>%
+  count(id) %>%
   ggplot(aes(n)) +
   geom_bar() +
   theme_minimal() +
   labs(x = "Número de assuntos por ação", y = "Contagem") +
-  scale_x_continuous(limits = c(0.5,5), breaks = 1:5) +
-  facet_wrap(vars(periodo), ncol = 1, scales = "free_y")
+  scale_x_continuous(limits = c(0.5,5), breaks = 1:5) 
 
-ggsave("Graficos\\grafico_n_assuntos.png", device = "png", bg = "white",
+ggsave("Graficos\\grafico_n_assuntos_2020.png", device = "png", bg = "white",
+       dpi = 300, width = 14, height = 10, units = "cm")
+
+
+
+banco_assuntos %>%
+  filter(id %in% id_2010) %>%
+  count(id) %>%
+  ggplot(aes(n)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(x = "Número de assuntos por ação", y = "Contagem") +
+  scale_x_continuous(limits = c(0.5,5), breaks = 1:5) 
+
+ggsave("Graficos\\grafico_n_assuntos_2010.png", device = "png", bg = "white",
        dpi = 300, width = 14, height = 10, units = "cm")
 
 ###############################################################################
@@ -154,6 +181,7 @@ banco_assuntos %>%
   count(dpj_nomeAssuntoNacional)
 
 banco_assuntos %>%
+  filter(id %in% id_2010) %>%
   filter(assunto_consolidado %in% c("Corrupçao ativa",
                                     "Lavagem ou ocultaçao de bens, direitos ou valores oriundos de corrupçao",
                                     "Lavagem ou ocultaçao de bens, direitos ou valores",
@@ -180,17 +208,61 @@ banco_assuntos %>%
                                     "Crimes praticados por particular contra a administraçao publica estrangeira",
                                     "Crimes contra as finanças publicas",
                                     "Peculato mediante erro de outrem")) %>%
-  count(assunto_consolidado, periodo) %>%
+  count(assunto_consolidado) %>%
   mutate(assunto_consolidado = fct_reorder(assunto_consolidado, n)) %>%
   ggplot(aes(n, assunto_consolidado)) +
   geom_col() +
   theme_minimal() +
   labs(x = "Contagem", y = "Assuntos") +
-  facet_wrap(vars(periodo), ncol = 1, scales = "free") +
+  # facet_wrap(vars(periodo), ncol = 1, scales = "free") +
   theme(axis.text=element_text(size=6))
 
-ggsave("Graficos\\grafico_assuntos_principais.png", device = "png", bg = "white",
-       dpi = 300, width = 14, height = 20, units = "cm")
+ggsave("Graficos\\grafico_assuntos_principais_2010.png", device = "png", bg = "white",
+       dpi = 300, width = 14, height = 10, units = "cm")
+
+
+
+
+
+banco_assuntos %>%
+  filter(id %in% id_2020) %>%
+  filter(assunto_consolidado %in% c("Corrupçao ativa",
+                                    "Lavagem ou ocultaçao de bens, direitos ou valores oriundos de corrupçao",
+                                    "Lavagem ou ocultaçao de bens, direitos ou valores",
+                                    "Corrupçao passiva",
+                                    "Peculato",
+                                    "Concussão",
+                                    "Trafico de influencia",
+                                    "Afastamento do cargo",
+                                    "Improbidade administrativa",
+                                    "Indisponibilidade de bens",
+                                    "Prevaricaçao",
+                                    "Crimes contra a ordem tributaria",
+                                    "Perda ou suspensao de direitos politicos",
+                                    "Contrabando ou descaminho",
+                                    "Crimes da lei de licitaçoes",
+                                    "Emprego irregular de verbas ou rendas publicas",
+                                    "Excesso de exaçao",
+                                    "Condescendência criminosa",
+                                    "Advocacia administrativa",
+                                    "Violaçao do sigilo de proposta de concorrencia",
+                                    "Impedimento, perturbação ou fraude de concorrencia",
+                                    "Inserçao de dados falsos em sistema de informaçao",
+                                    "Sonegaçao de contribuiçao previdenciaria",
+                                    "Crimes praticados por particular contra a administraçao publica estrangeira",
+                                    "Crimes contra as finanças publicas",
+                                    "Peculato mediante erro de outrem")) %>%
+  count(assunto_consolidado) %>%
+  mutate(assunto_consolidado = fct_reorder(assunto_consolidado, n)) %>%
+  ggplot(aes(n, assunto_consolidado)) +
+  geom_col() +
+  theme_minimal() +
+  labs(x = "Contagem", y = "Assuntos") +
+  # facet_wrap(vars(periodo), ncol = 1, scales = "free") +
+  theme(axis.text=element_text(size=6))
+
+ggsave("Graficos\\grafico_assuntos_principais_2020.png", device = "png", bg = "white",
+       dpi = 300, width = 14, height = 10, units = "cm")
 
 ###############################################################################
 
@@ -365,17 +437,31 @@ banco_acoes <- banco_acoes %>%
 
 
 banco_acoes %>%
-  count(regiao, periodo, sort = T) %>%
+  filter(periodo == "2010-2019") %>%
+  count(regiao, sort = T) %>%
   filter(!is.na(regiao)) %>%
   mutate(regiao = fct_reorder(regiao, n)) %>%
   ggplot(aes(n, regiao)) + 
   geom_col() +
   theme_minimal() +
-  labs(x = "Contagem", y = "Região") +
-  facet_wrap(vars(periodo), ncol = 1, scales = "free") 
+  labs(x = "Contagem", y = "Região") 
 
 
-ggsave("Graficos\\grafico_regiao.png", device = "png", bg = "white",
+ggsave("Graficos\\grafico_regiao_2010.png", device = "png", bg = "white",
+       dpi = 300, width = 14, height = 10, units = "cm")
+
+banco_acoes %>%
+  filter(periodo == "2020-2022") %>%
+  count(regiao, sort = T) %>%
+  filter(!is.na(regiao)) %>%
+  mutate(regiao = fct_reorder(regiao, n)) %>%
+  ggplot(aes(n, regiao)) + 
+  geom_col() +
+  theme_minimal() +
+  labs(x = "Contagem", y = "Região") 
+
+
+ggsave("Graficos\\grafico_regiao_2020.png", device = "png", bg = "white",
        dpi = 300, width = 14, height = 10, units = "cm")
 
 ###############################################################################
@@ -389,6 +475,7 @@ banco_acoes %>%
                              digito_14 == "JT" ~ "Trabalhista"))
 
 banco_acoes %>%
+  filter(periodo == "2010-2019") %>%
   count(justica, periodo, sort = T) %>%
   filter(!is.na(justica)) %>%
   mutate(justica = fct_reorder(justica, n)) %>%
@@ -398,14 +485,31 @@ banco_acoes %>%
   labs(x = "Contagem", y = "Justiça") +
   facet_wrap(vars(periodo), ncol = 1, scales = "free") 
 
-ggsave("Graficos\\grafico_justica.png", device = "png", bg = "white",
+ggsave("Graficos\\grafico_justica_2010.png", device = "png", bg = "white",
+       dpi = 300, width = 14, height = 10, units = "cm")
+
+
+banco_acoes %>%
+  filter(periodo == "2020-2022") %>%
+  count(justica, periodo, sort = T) %>%
+  filter(!is.na(justica)) %>%
+  mutate(justica = fct_reorder(justica, n)) %>%
+  ggplot(aes(n, justica)) +
+  geom_col() +
+  theme_minimal() +
+  labs(x = "Contagem", y = "Justiça") +
+  facet_wrap(vars(periodo), ncol = 1, scales = "free") 
+
+ggsave("Graficos\\grafico_justica_2020.png", device = "png", bg = "white",
        dpi = 300, width = 14, height = 10, units = "cm")
 
 ###############################################################################
+library(ggthemes)
 
 banco_acoes %>%
-  # filter(!is.na(justica),
-  #        !is.na(regiao)) %>%
+  filter(periodo == "2010-2019") %>%
+  filter(!is.na(justica),
+         !is.na(regiao)) %>%
   count(justica, regiao, periodo) %>%
   ggplot(aes(regiao, n, fill = justica)) +
   geom_bar(position = "fill", stat = "identity") +
@@ -414,7 +518,22 @@ banco_acoes %>%
   facet_wrap(vars(periodo), ncol = 1, scales = "free") +
   scale_fill_ptol()
 
-ggsave("Graficos\\grafico_justica_regiao.png", device = "png", bg = "white",
+ggsave("Graficos\\grafico_justica_regiao_2010.png", device = "png", bg = "white",
+       dpi = 300, width = 14, height = 14, units = "cm")
+
+banco_acoes %>%
+  filter(periodo == "2020-2022") %>%
+  filter(!is.na(justica),
+         !is.na(regiao)) %>%
+  count(justica, regiao, periodo) %>%
+  ggplot(aes(regiao, n, fill = justica)) +
+  geom_bar(position = "fill", stat = "identity") +
+  theme_minimal() +
+  labs(x = "Região", y = "Proporção") +
+  facet_wrap(vars(periodo), ncol = 1, scales = "free") +
+  scale_fill_ptol()
+
+ggsave("Graficos\\grafico_justica_regiao_2020.png", device = "png", bg = "white",
        dpi = 300, width = 14, height = 14, units = "cm")
 
 ###############################################################################
